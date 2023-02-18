@@ -8,7 +8,8 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "xo"
+		"test": "xo",
+		"start": "unset npm_config_prefix && . $HOME/.bashrc && node build"
 	},
 	"devDependencies": {
 		"@mdi/js": "^7.1.96",

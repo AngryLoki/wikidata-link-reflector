@@ -1,22 +1,8 @@
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+# Wikidata Link Reflector
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've created a project and installed dependencies with `pnpm install`, start a development server:
 
 ```bash
 npm run dev
@@ -35,4 +21,25 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Deploying on toolforge
+
+```bash
+become reflector
+
+# mkdir www
+
+# git clone https://github.com/AngryLoki/wikidata-link-reflector.git js
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+# nvm install 19 && nvm use 19
+# curl -fsSL https://get.pnpm.io/install.sh | sh -
+# pnpm add -g pnpm
+
+source ~/.bashrc  # This enables pnpm and nvm
+
+cd js
+git pull
+
+pnpm install
+npm run build
+webservice --backend=kubernetes node16 restart
+```

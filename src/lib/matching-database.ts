@@ -296,6 +296,7 @@ export type MatchingDatabase = {
 
 export const buildMatchingDatabase = async (): Promise<MatchingDatabase> => {
 	console.log('Building matching database');
+	const startTime = performance.now();
 
 	const [
 		{items: manualMatchers, errors: errors1},
@@ -310,6 +311,8 @@ export const buildMatchingDatabase = async (): Promise<MatchingDatabase> => {
 		getValuesByLanguage('rdfs:label'),
 		getValuesByLanguage('schema:description'),
 	]);
+
+	console.log(`Retrieved matching database data in ${Math.round(performance.now() - startTime)} ms`);
 
 	let items: MatchingRules = {};
 	const statementErrors: StatementErrors = [...errors1, ...errors2, ...errors3];

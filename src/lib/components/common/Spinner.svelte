@@ -3,7 +3,7 @@
 	export { cls as class };
 </script>
 
-<div class="inline overflow-hidden {cls ?? 'w-6 h-6'}">
+<div class="inline-block overflow-hidden {cls ?? 'w-6 h-6'}">
 	<div class="animate-spin-dynamic w-full h-full">
 		<svg
 			viewBox="0 0 16 16"

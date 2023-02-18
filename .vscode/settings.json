@@ -13,6 +13,5 @@
     },
     "files.exclude": {
         "/build": true
-    },
-    "tailwindCSS.rootFontSize": 14
+    }
 }

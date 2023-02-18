@@ -27,9 +27,9 @@
     class="text-white font-medium rounded-sm px-2.5 truncate transition leading-8
     focus:outline-none focus-visible:outline-offset-0
     {primary
-        ? 'bg-blue-700 hover:bg-blue-600 active:bg-blue-800 focus-visible:outline-blue-500'
-        : 'bg-gray-450 hover:bg-gray-400 active:bg-gray-500'}
-    
+        ? 'bg-blue-700 hover:bg-blue-600 active:bg-blue-800'
+        : 'bg-gray-500 hover:bg-gray-450 active:bg-gray-550'}
+     focus-visible:outline-blue-500
     disabled:cursor-not-allowed disabled:bg-blue-300/10 disabled:text-white/25 disabled:hover:bg-blue-300/10
     {cls}"
     {disabled}

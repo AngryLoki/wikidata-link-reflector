@@ -1,5 +1,3 @@
-const plugin = require('tailwindcss/plugin');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -29,16 +27,27 @@ module.exports = {
 					950: '#090C14',
 				},
 			},
+			screens: {
+				coarse: {raw: '(pointer: coarse)'},
+				nohover: {raw: '(hover: none)'},
+			},
+			keyframes: {
+				'spin-appear': {
+					'0%, 100%': {transform: 'rotate(50deg)', opacity: 0, 'stroke-dashoffset': 60},
+					'100%': {transform: 'rotate(230deg)', opacity: 1, 'stroke-dashoffset': 50},
+				},
+			},
+			animation: {
+				'spin-appear': '1s ease-in-out 0s 1 normal forwards running spin-appear',
+				'spin-dynamic': '0.86s cubic-bezier(0.4, 0.15, 0.6, 0.85) 0s infinite normal none running spin',
+			},
 		},
 	},
-	plugins: [
-		plugin(({addBase}) => {
-			addBase({
-				html: {fontSize: '14px'},
-			});
-		}),
-	],
+	plugins: [],
 	experimental: {
 		optimizeUniversalDefaults: true,
+	},
+	future: {
+		hoverOnlyWhenSupported: true,
 	},
 };

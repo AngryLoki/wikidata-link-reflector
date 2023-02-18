@@ -45,7 +45,17 @@
 							"default": "en",
 							"example": "en"
 						},
-						"description": "The language code"
+						"description": "The language code for property label and description"
+					},
+					{
+						"name": "property",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"pattern": "^P\\d+$",
+							"example": "P2002"
+						},
+						"description": "Match against specific property instead of all properties"
 					}
 				],
 				"responses": {
@@ -84,6 +94,9 @@
 													},
 													"description": {
 														"type": "string"
+													},
+													"link": {
+														"type": "string"
 													}
 												}
 											}
@@ -96,7 +109,8 @@
 											"id": "P2002",
 											"value": "test",
 											"label": "Twitter username",
-											"description": "this item's username on Twitter; do not include the “@” symbol"
+											"description": "this item's username on Twitter; do not include the “@” symbol",
+											"link": "https://twitter.com/test"
 										}
 									]
 								}

@@ -21,6 +21,7 @@ export type UrlMatch = {
 	value: string;
 	label: string;
 	description: string | undefined;
+	link: string | undefined;
 };
 
 export type CandidateStatement = {
@@ -89,26 +90,32 @@ export class MatchingService {
 		return new Date(this.db.refreshDate);
 	}
 
-	public match(url: string, language: string): UrlMatch[] {
+	public match(url: string, language: string, property: string | undefined = undefined): UrlMatch[] {
 		const propertyValues: Record<string, UrlMatch> = {};
 
-		for (const {propertyId: id, matcher} of this.matchers) {
+		let matchers = this.matchers;
+		if (property !== undefined) {
+			matchers = matchers.filter(({propertyId}) => propertyId === property);
+		}
+
+		for (const {propertyId: id, matcher} of matchers) {
 			const value = matcher(url);
 			if (value !== undefined) {
 				const label = this.getLabel(id, language);
 				const description = this.getDescription(id, language);
-				propertyValues[`${id}:${value}`] = {id, value, label, description};
+				const link = this.getLink(id, value);
+				propertyValues[`${id}:${value}`] = {id, value, label, description, link};
 			}
 		}
 
 		return Object.values(propertyValues).sort(({id: a}, {id: b}) => Number(a.slice(1)) - Number(b.slice(1)));
 	}
 
-	public matchMany(links: string[], language: string) {
+	public matchMany(links: string[], language: string, property: string | undefined = undefined) {
 		const matches: Record<string, CandidateStatement> = {};
 
 		for (const link of links) {
-			const linkMatches = this.match(link, language);
+			const linkMatches = this.match(link, language, property);
 
 			for (const {id: propertyId, value} of linkMatches) {
 				const key = `${propertyId}:${value}`;
@@ -144,6 +151,16 @@ export class MatchingService {
 		}
 
 		return this.db.descriptions[language]?.[propertyId] ?? this.db.descriptions.en[propertyId];
+	}
+
+	private getLink(propertyId: string, value: string) {
+		const formatter = this.db.rules[propertyId]?.formatters?.[0].formatter;
+
+		if (formatter === undefined) {
+			return;
+		}
+
+		return formatter.replace('$1', value);
 	}
 
 	private setupMatchers() {
