@@ -31,7 +31,7 @@ export const GET: RequestHandler = async ({url: {searchParams}}) => {
 		items: matchingService.match(url, language, property),
 		refreshDate: matchingService.refreshDate.toISOString(),
 	};
-	return json(result);
+	return json(result, {headers: {'Access-Control-Allow-Origin': '*'}});
 };
 
 // Enables CORS requests

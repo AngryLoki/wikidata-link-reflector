@@ -26,19 +26,19 @@ You can preview the production build with `npm run preview`.
 ```bash
 become reflector
 
-# mkdir www
-
-# git clone https://github.com/AngryLoki/wikidata-link-reflector.git js
+# mkdir -p ~/www/js
+# cd ~/www/js
+# git clone https://github.com/AngryLoki/wikidata-link-reflector.git .
 # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 # nvm install 19 && nvm use 19
 # curl -fsSL https://get.pnpm.io/install.sh | sh -
 # pnpm add -g pnpm
 
-source ~/.bashrc  # This enables pnpm and nvm
 
-cd js
+cd ~/www/js
 git pull
 
+source ~/.bashrc  # This enables pnpm and nvm
 pnpm install
 npm run build
 webservice --backend=kubernetes node16 restart
