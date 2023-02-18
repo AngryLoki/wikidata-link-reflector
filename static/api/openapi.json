@@ -1,0 +1,113 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Wikidata Link Reflector REST API",
+		"version": "1.0"
+	},
+	"tags": [
+		{
+			"name": "reflect"
+		}
+	],
+	"servers": [
+		{
+			"url": "/"
+		}
+	],
+	"paths": {
+		"/api/v1/reflect": {
+			"get": {
+				"summary": "Reflect endpoint",
+				"description": "Transform URL into Wikidata statement",
+				"tags": [
+					"reflect"
+				],
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"pattern": "^https?:\\/\\/",
+							"minLength": 13,
+							"maxLength": 2048,
+							"example": "https://twitter.com/test"
+						},
+						"description": "The URL to be transformed"
+					},
+					{
+						"name": "lang",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"pattern": "^[a-z][a-z-]+$",
+							"default": "en",
+							"example": "en"
+						},
+						"description": "The language code"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"additionalProperties": false,
+									"required": [
+										"items"
+									],
+									"properties": {
+										"items": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"additionalProperties": false,
+												"required": [
+													"id",
+													"value",
+													"label"
+												],
+												"properties": {
+													"id": {
+														"type": "string",
+														"pattern": "^P\\d+"
+													},
+													"value": {
+														"type": "string",
+														"minLength": 1
+													},
+													"label": {
+														"type": "string"
+													},
+													"description": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								},
+								"example": {
+									"items": [
+										{
+											"id": "P2002",
+											"value": "test",
+											"label": "Twitter username",
+											"description": "this item's username on Twitter; do not include the “@” symbol"
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "No URL provided"
+					}
+				}
+			}
+		}
+	}
+}
