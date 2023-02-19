@@ -40,11 +40,18 @@
 
   <div class="mb-4 flex flex-wrap gap-4">
     <a
-      href="https://github.com/AngryLoki/wikidata-graph-builder"
+      href="https://github.com/AngryLoki/wikidata-link-reflector"
       target="_blank"
       rel="noopener noreferrer">Source code</a
     >
     <a href="/api/index.html"> API documentation </a>
+    <a
+      href="https://grafana.wmcloud.org/d/TJuKfnt4z/kubernetes-namespace?orgId=1&var-cluster=prometheus-tools&var-namespace=tool-reflector&from=now-7d&to=now"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Status dashboard
+    </a>
   </div>
 
   <div class="mb-8">

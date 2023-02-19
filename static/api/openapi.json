@@ -56,6 +56,19 @@
 							"example": "P2002"
 						},
 						"description": "Match against specific property instead of all properties"
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": [
+								"property",
+								"item"
+							],
+							"default": "property"
+						},
+						"description": "For type=property, output relevant property ids. For type=item, output items with extracted property/value"
 					}
 				],
 				"responses": {
@@ -83,7 +96,7 @@
 												"properties": {
 													"id": {
 														"type": "string",
-														"pattern": "^P\\d+"
+														"pattern": "^[PQ]\\d+"
 													},
 													"value": {
 														"type": "string",

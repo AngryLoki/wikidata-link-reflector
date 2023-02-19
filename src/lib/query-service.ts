@@ -116,7 +116,7 @@ export class QueryService {
 		};
 
 		if (!browser) {
-			headers['User-Agent'] = 'l-tools';
+			headers['User-Agent'] = 'lockal-tools';
 		}
 
 		const init: RequestInit = {headers, ...options};

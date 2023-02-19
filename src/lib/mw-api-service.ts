@@ -33,7 +33,7 @@ export class MwApiService {
 
 	private constructor(init: MwApiServiceServiceInit) {
 		const headers = browser ? undefined : {
-			'User-Agent': 'l-tools',
+			'User-Agent': 'lockal-tools',
 		};
 
 		this.server = init.server;
@@ -43,7 +43,7 @@ export class MwApiService {
 
 	async getEntityData(entityId: string) {
 		const headers = browser ? undefined : {
-			'User-Agent': 'l-tools',
+			'User-Agent': 'lockal-tools',
 		};
 
 		const url = `${this.server}/wiki/Special:EntityData/${entityId}.json`;
@@ -65,7 +65,7 @@ export class MwApiService {
 		};
 
 		if (!browser) {
-			headers['User-Agent'] = 'l-tools';
+			headers['User-Agent'] = 'lockal-tools';
 		}
 
 		const queryEx = {
