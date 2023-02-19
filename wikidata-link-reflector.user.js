@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         Wikidata Link Suggester
-// @namespace    http://tampermonkey.net/
+// @name         Wikidata Link Reflector
+// @namespace    https://www.wikidata.org/
 // @version      0.1
 // @description  Suggest properties and values from links
 // @author       Lockal
-// @match        https://test.wikidata.org/wiki/*
+// @license      MIT
 // @match        https://www.wikidata.org/wiki/*
 // @icon         https://www.wikidata.org/static/favicon/wikidata.ico
 // @grant        unsafeWindow
@@ -13,9 +13,8 @@
 /* eslint-disable unicorn/prefer-module */
 /* eslint-env browser */
 /* global unsafeWindow */
-
-// How to edit userscripts with your favorite editor:
-// https://violentmonkey.github.io/posts/how-to-edit-scripts-with-your-favorite-editor/
+/* jshint esnext: false */
+/* jshint esversion: 11 */
 
 (function () {
 	'use strict';
@@ -26,7 +25,10 @@
 	// const reflectEndpoint = 'http://localhost:5173/api/v1/reflect';
 
 	const attachUserscript = fn => {
-		const config = unsafeWindow.RLCONF;
+		const isUserscript = typeof unsafeWindow !== 'undefined';
+		const globalNamespace = isUserscript ? unsafeWindow : window;
+
+		const config = globalNamespace.RLCONF;
 		if (config === undefined) {
 			return;
 		}
@@ -41,19 +43,25 @@
 		}
 
 		// Install global variable to disallow multiple versions
-		if (unsafeWindow.wgReflectorLoaded) {
+		if (globalNamespace.wgReflectorLoaded) {
 			console.log('Wikidata Link Reflector: not loaded, because other version was already loaded');
 			return;
 		}
 
-		unsafeWindow.wgReflectorLoaded = true;
+		globalNamespace.wgReflectorLoaded = true;
 
-		(new window.MutationObserver((_changes, observer) => {
-			if (unsafeWindow.jQuery?.ui && unsafeWindow.mw?.hook) {
-				fn(unsafeWindow.jQuery, unsafeWindow.mw);
-				observer.disconnect();
-			}
-		})).observe(document, {childList: true, subtree: true});
+		if (isUserscript) {
+			(new window.MutationObserver((_changes, observer) => {
+				if (unsafeWindow.jQuery?.ui && unsafeWindow.mw?.hook) {
+					fn(unsafeWindow.jQuery, unsafeWindow.mw);
+					observer.disconnect();
+				}
+			})).observe(document, {childList: true, subtree: true});
+		} else {
+			window.mw.loader.using(['jquery.ui', 'wikibase.api.RepoApi']).then(() => {
+				fn(window.jQuery, window.mw);
+			});
+		}
 	};
 
 	attachUserscript(($, mw) => {

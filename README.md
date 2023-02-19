@@ -34,12 +34,5 @@ become reflector
 # curl -fsSL https://get.pnpm.io/install.sh | sh -
 # pnpm add -g pnpm
 
-
-cd ~/www/js
-git pull
-
-source ~/.bashrc  # This enables pnpm and nvm
-pnpm install
-npm run build
-webservice --backend=kubernetes node16 restart
+./www/js/update.sh
 ```
